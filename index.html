@@ -3,711 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Landing page interactiva de la Tripulación Ecléctica: Marita, Megan, Huevancas y Exequiel Palac. Conoce sus historias y contáctanos.">
-    <title>La Tripulación Ecléctica | Green Valley Haven</title>
-
-    <!-- Google Fonts Preconnect & Stylesheets -->
+    <title>Puzzle Quest: Tripulación Ecléctica</title>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome Icons CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <!-- Hoja de Estilos Externa -->
+    
+    <!-- Estilos Externos -->
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Script de Lógica e Interactividad (Diferido) -->
+    <!-- Lógica del Juego (Diferido) -->
     <script defer src="main.js"></script>
 </head>
-<body id="top">
+<body>
 
-    <!-- Fondo de Efectos Especiales (Lienzo interactivo de partículas) -->
-    <canvas id="bg-canvas" class="background-canvas"></canvas>
-    <div class="ambient-sphere sphere-1" aria-hidden="true"></div>
-    <div class="ambient-sphere sphere-2" aria-hidden="true"></div>
-    <div class="ambient-sphere sphere-3" aria-hidden="true"></div>
+    <!-- Canvas de Efectos (Confeti y Partículas de Victoria) -->
+    <canvas id="confettiCanvas" class="fx-canvas"></canvas>
 
-    <!-- Barra de Navegación Principal -->
-    <header class="main-header" id="navbar">
-        <div class="nav-container">
-            <!-- Logotipo -->
-            <a href="#top" class="nav-brand" aria-label="Ir al inicio">
-                <div class="brand-logo-icon">🐾</div>
-                <div class="brand-info">
-                    <span class="brand-title">Tripulación Ecléctica</span>
-                    <span class="brand-tag">Green Valley Haven</span>
+    <!-- App Wrapper -->
+    <div class="game-wrapper">
+
+        <!-- Top Header & Game Title -->
+        <header class="game-header">
+            <div class="brand">
+                <span class="brand-icon">🧩</span>
+                <div class="brand-text">
+                    <h1>PUZZLE QUEST</h1>
+                    <p>La Tripulación Ecléctica</p>
                 </div>
-            </a>
+            </div>
+            
+            <div class="header-controls">
+                <button class="icon-btn" id="soundToggleBtn" aria-label="Activar o desactivar sonido" title="Sonido">
+                    <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+                </button>
+                <button class="icon-btn" id="helpBtn" aria-label="Instrucciones" title="Cómo jugar">
+                    <i class="fa-solid fa-circle-question"></i>
+                </button>
+            </div>
+        </header>
 
-            <!-- Botón Hamburguesa para Móvil -->
-            <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+        <!-- Selector de Niveles (Personajes) -->
+        <nav class="level-selector" aria-label="Selección de niveles">
+            <button class="level-tab active" data-level="0">
+                <span class="tab-badge">Nvl 1</span>
+                <span class="tab-emoji">🐱</span>
+                <span class="tab-name">Marita</span>
             </button>
-
-            <!-- Enlaces de Navegación Interna -->
-            <nav class="nav-menu" id="navMenu">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="#inicio" class="nav-link active">Inicio</a></li>
-                    <li class="nav-item"><a href="#tripulacion" class="nav-link">Tripulación</a></li>
-                    <li class="nav-item"><a href="#lore" class="nav-link">Historia</a></li>
-                    <li class="nav-item"><a href="#redes" class="nav-link">Redes</a></li>
-                    <li class="nav-item"><a href="#contacto" class="nav-link">Contacto</a></li>
-                </ul>
-
-                <!-- Acciones Rápidas en el Menú -->
-                <div class="nav-cta-box">
-                    <a href="https://wa.me/5493764658115?text=Hola%20Green%20Valley!%20Quiero%20conocer%20m%C3%A1s%20sobre%20la%20Tripulaci%C3%B3n%20Ecl%C3%A9ctica%20%F0%9F%A5%B0" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="btn btn-primary btn-nav-wa">
-                        <i class="fa-brands fa-whatsapp"></i>
-                        <span>WhatsApp</span>
-                    </a>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Contenedor Principal de la Web -->
-    <main>
-
-        <!-- SECCIÓN 1: HERO SECTION -->
-        <section class="hero-section" id="inicio">
-            <div class="container hero-container">
-                <div class="hero-content">
-                    <div class="badge hero-badge">
-                        <i class="fa-solid fa-sparkles"></i>
-                        <span>Santuario & Leyendas Vivas</span>
-                    </div>
-                    <h1 class="hero-title">
-                        Conoce a la legendaria <br>
-                        <span class="text-gradient">Tripulación Ecléctica</span>
-                    </h1>
-                    <p class="hero-description">
-                        Cuatro compañeros extraordinarios reunidos en un solo lugar: una gata mística observadora, una leal guardiana de los panes, un acróbata supersónico en dos patas y una oveja rosa de leyenda.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="#tripulacion" class="btn btn-primary btn-glow">
-                            <i class="fa-solid fa-paw"></i>
-                            <span>Ver Tripulación</span>
-                        </a>
-                        <a href="#redes" class="btn btn-secondary">
-                            <i class="fa-solid fa-satellite-dish"></i>
-                            <span>Nuestras Redes</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Tarjetas Rápidas Flotantes (Mini preview visual) -->
-                <div class="hero-visual">
-                    <div class="hero-preview-grid">
-                        <a href="#marita" class="preview-mini-card p-marita">
-                            <span class="preview-emoji">🐱</span>
-                            <span class="preview-name">Marita</span>
-                        </a>
-                        <a href="#megan" class="preview-mini-card p-megan">
-                            <span class="preview-emoji">🐕</span>
-                            <span class="preview-name">Megan</span>
-                        </a>
-                        <a href="#huevancas" class="preview-mini-card p-huevancas">
-                            <span class="preview-emoji">⚡</span>
-                            <span class="preview-name">Huevancas</span>
-                        </a>
-                        <a href="#exequiel" class="preview-mini-card p-exequiel">
-                            <span class="preview-emoji">🐑</span>
-                            <span class="preview-name">Exequiel</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Barra de Estadísticas Divertidas -->
-            <div class="hero-stats-bar">
-                <div class="container stats-flex">
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="4">4</span>
-                        <span class="stat-label">Guardianes Oficiales</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="100">100%</span>
-                        <span class="stat-label">Carisma y Lealtad</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="24">24/7</span>
-                        <span class="stat-label">Diversión & Aventuras</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-count="999">+∞</span>
-                        <span class="stat-label">Nivel de Ternura</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 2: TRIPULACIÓN (Cards Individuales y Filtros) -->
-        <section class="crew-section" id="tripulacion">
-            <div class="container">
-                
-                <!-- Encabezado de Sección -->
-                <div class="section-header text-center">
-                    <div class="badge section-badge">
-                        <i class="fa-solid fa-address-card"></i> Fichas Oficiales
-                    </div>
-                    <h2 class="section-title">Nuestros Cuatro Protagonistas</h2>
-                    <p class="section-subtitle">
-                        Haz clic en cada tarjeta para conocer sus habilidades secretas o escríbeles directamente por WhatsApp.
-                    </p>
-
-                    <!-- Filtros Rápidos (Manejados por JS) -->
-                    <div class="filter-wrapper">
-                        <button class="filter-btn active" data-filter="all">
-                            <i class="fa-solid fa-shapes"></i> Todos (4)
-                        </button>
-                        <button class="filter-btn" data-filter="felino">
-                            <i class="fa-solid fa-cat"></i> Felinos
-                        </button>
-                        <button class="filter-btn" data-filter="canino">
-                            <i class="fa-solid fa-dog"></i> Caninos
-                        </button>
-                        <button class="filter-btn" data-filter="mitico">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> Míticos
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Grilla de Tarjetas -->
-                <div class="crew-grid" id="crewGrid">
-
-                    <!-- TARJETA 1: MARITA -->
-                    <article class="animal-card card-marita" id="marita" data-species="felino">
-                        <div class="card-glass-glow"></div>
-                        
-                        <div class="card-top-bar">
-                            <span class="card-role-tag">
-                                <i class="fa-solid fa-moon"></i> Detective Mística
-                            </span>
-                            <span class="card-level">Nivel 45</span>
-                        </div>
-
-                        <!-- Contenedor de Imagen -->
-                        <div class="card-media">
-                            <img src="img/marita.jpeg" alt="Foto de Marita el gato" class="animal-photo" loading="lazy">
-                            <div class="media-overlay-badge">
-                                <span class="pulse-indicator"></span> Radar Nocturno
-                            </div>
-                        </div>
-
-                        <!-- Información -->
-                        <div class="card-body">
-                            <div class="animal-headline">
-                                <h3 class="animal-name">MARITA</h3>
-                                <span class="animal-subname">La Observadora de la Noche</span>
-                            </div>
-
-                            <p class="animal-bio">
-                                Especialista en descifrar los misterios de la casa a altas horas de la madrugada y fiscalizar el descanso de todos con su mirada penetrante.
-                            </p>
-
-                            <!-- Lista de Atributos -->
-                            <div class="traits-box">
-                                <h4 class="traits-title"><i class="fa-solid fa-clipboard-check"></i> Registro de Habilidades:</h4>
-                                <ul class="traits-list">
-                                    <li><i class="fa-solid fa-check"></i> Detección de presencias invisibles a las 3:00 AM.</li>
-                                    <li><i class="fa-solid fa-check"></i> Caza estratégica de sombras y rayos de sol en el suelo.</li>
-                                    <li><i class="fa-solid fa-check"></i> Récord de 16 horas seguidas de siestas de alta calidad.</li>
-                                </ul>
-                            </div>
-
-                            <!-- Barra de Poder -->
-                            <div class="skills-container">
-                                <div class="skill-item">
-                                    <div class="skill-label">
-                                        <span>Sigilo Felino</span>
-                                        <span>98%</span>
-                                    </div>
-                                    <div class="skill-bar-track">
-                                        <div class="skill-bar-progress" style="--val: 98%;"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <div class="skill-label">
-                                        <span>Juicio Silencioso</span>
-                                        <span>100%</span>
-                                    </div>
-                                    <div class="skill-bar-track">
-                                        <div class="skill-bar-progress" style="--val: 100%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Acciones y Redirección -->
-                        <div class="card-footer">
-                            <a href="https://wa.me/5493764658115?text=Hola!%20Quiero%20hablar%20con%20Marita,%20la%20Observadora%20de%20la%20Noche%20%F0%9F%90%B1%E2%9C%A8" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               class="btn btn-wa-action">
-                                <i class="fa-brands fa-whatsapp"></i>
-                                <span>WhatsApp con Marita</span>
-                            </a>
-                            <button class="btn btn-inspect" data-target="marita">
-                                <i class="fa-solid fa-circle-info"></i> Ficha Secreta
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- TARJETA 2: MEGAN -->
-                    <article class="animal-card card-megan" id="megan" data-species="canino">
-                        <div class="card-glass-glow"></div>
-
-                        <div class="card-top-bar">
-                            <span class="card-role-tag">
-                                <i class="fa-solid fa-shield-halved"></i> Custodio del Pan
-                            </span>
-                            <span class="card-level">Nivel 80</span>
-                        </div>
-
-                        <div class="card-media">
-                            <img src="img/megan.jpeg" alt="Foto de Megan la perra negra grande" class="animal-photo" loading="lazy">
-                            <div class="media-overlay-badge">
-                                <span class="pulse-indicator"></span> Radar de Carbohidratos
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="animal-headline">
-                                <h3 class="animal-name">MEGAN</h3>
-                                <span class="animal-subname">La Guardiana del Pan</span>
-                            </div>
-
-                            <p class="animal-bio">
-                                Imponente por fuera pero con un corazón de mantequilla pura. Su misión sagrada es custodiar cualquier migaja o trozo de pan que ronde por la mesa.
-                            </p>
-
-                            <div class="traits-box">
-                                <h4 class="traits-title"><i class="fa-solid fa-clipboard-check"></i> Registro de Habilidades:</h4>
-                                <ul class="traits-list">
-                                    <li><i class="fa-solid fa-check"></i> Detección supersónica del sonido de bolsas de pan crujiente.</li>
-                                    <li><i class="fa-solid fa-check"></i> Mirada suplicante irresistible con 100% de efectividad.</li>
-                                    <li><i class="fa-solid fa-check"></i> Protección incondicional y abrazos de tamaño gigante.</li>
-                                </ul>
-                            </div>
-
-                            <div class="skills-container">
-                                <div class="skill-item">
-                                    <div class="skill-label">
-                                        <span>Olfato de Panaderia</span>
-                                        <span>100%</span>
-                                    </div>
-                                    <div class="skill-bar-track">
-                                        <div class="skill-bar-progress" style="--val: 100%;"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <div class="skill-label">
-                                        <span>Ternura Incondicional</span>
-                                        <span>96%</span>
-                                    </div>
-                                    <div class="skill-bar-track">
-                                        <div class="skill-bar-progress" style="--val: 96%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <a href="https://wa.me/5493764658115?text=Hola!%20Vengo%20a%20traerle%20un%20pan%20a%20Megan%20la%20Guardiana%20%F0%9F%A5%96%F0%9F%90%95" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               class="btn btn-wa-action">
-                                <i class="fa-brands fa-whatsapp"></i>
-                                <span>WhatsApp con Megan</span>
-                            </a>
-                            <button class="btn btn-inspect" data-target="megan">
-                                <i class="fa-solid fa-circle-info"></i> Ficha Secreta
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- TARJETA 3: HUEVANCAS -->
-                    <article class="animal-card card-huevancas" id="huevancas" data-species="canino">
-                        <div class="card-glass-glow"></div>
-
-                        <div class="card-top-bar">
-                            <span class="card-role-tag">
-                                <i class="fa-solid fa-bolt"></i> Acróbata Bípedo
-                            </span>
-                            <span class="card-level">Nivel 99</span>
-                        </div>
-
-                        <div class="card-media">
-                            <img src="img/kevin.jpeg" alt="Foto de Huevancas el perro pinscher" class="animal-photo" loading="lazy">
-                            <div class="media-overlay-badge">
-                                <span class="pulse-indicator"></span> Modo Erguido Activo
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="animal-headline">
-                                <h3 class="animal-name">HUEVANCAS</h3>
-                                <span class="animal-subname">El Acróbata del Equipo</span>
-                            </div>
-
-                            <p class="animal-bio">
-                                Pequeño de estatura pero gigante de actitud. Es capaz de caminar en dos patas, desafiar la gravedad con saltos elásticos y vigilar el perímetro sin descanso.
-                            </p>
-
-                            <div class="traits-box">
-                                <h4 class="traits-title"><i class="fa-solid fa-clipboard-check"></i> Registro de Habilidades:</h4>
-                                <ul class="traits-list">
-                                    <li><i class="fa-solid fa-check"></i> Locomoción en dos patas como un auténtico ser humano.</li>
-                                    <li><i class="fa-solid fa-check"></i> Resortes integrados en las patas traseras para brincos épicos.</li>
-                                    <li><i class="fa-solid fa-check"></i> Valentía nivel dragón ante cualquier timbre o visitante.</li>
-                                </ul>
-                            </div>
-
-                            <div class="skills-container">
-                                <div class="skill-item">
-                                    <div class="skill-label">
-                                        <span>Equilibrio Bípedo</span>
-                                        <span>99%</span>
-                                    </div>
-                                    <div class="skill-bar-track">
-                                        <div class="skill-bar-progress" style="--val: 99%;"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <div class="skill-label">
-                                        <span>Energía Atómica</span>
-                                        <span>100%</span>
-                                    </div>
-                                    <div class="skill-bar-track">
-                                        <div class="skill-bar-progress" style="--val: 100%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <a href="https://wa.me/5493764658115?text=Hola!%20Quiero%20saludar%20a%20Huevancas,%20el%20andr%C3%B3ide%20acrob%C3%A1tico%20%F0%9F%90%B6%E2%9A%A1" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               class="btn btn-wa-action">
-                                <i class="fa-brands fa-whatsapp"></i>
-                                <span>WhatsApp con Huevancas</span>
-                            </a>
-                            <button class="btn btn-inspect" data-target="huevancas">
-                                <i class="fa-solid fa-circle-info"></i> Ficha Secreta
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- TARJETA 4: EXEQUIEL PALAC -->
-                    <article class="animal-card card-exequiel" id="exequiel" data-species="mitico">
-                        <div class="card-glass-glow"></div>
-
-                        <div class="card-top-bar">
-                            <span class="card-role-tag">
-                                <i class="fa-solid fa-crown"></i> Entidad Legendaria
-                            </span>
-                            <span class="card-level">Nivel 64</span>
-                        </div>
-
-                        <div class="card-media">
-                            <img src="img/exequiel.jpeg" alt="Foto de Exequiel Palac la oveja rosa" class="animal-photo" loading="lazy">
-                            <div class="media-overlay-badge">
-                                <span class="pulse-indicator"></span> Glamour Nivel 64
-                            </div>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="animal-headline">
-                                <h3 class="animal-name">EXEQUIEL PALAC</h3>
-                                <span class="animal-subname">La Oveja Rosa Fabulosa</span>
-                            </div>
-
-                            <p class="animal-bio">
-                                Surgida directamente de mundos mágicos y servidores de supervivencia extrema. Su lana rosa resplandece y su estilo no tiene comparación en toda la comarca.
-                            </p>
-
-                            <div class="traits-box">
-                                <h4 class="traits-title"><i class="fa-solid fa-clipboard-check"></i> Registro de Habilidades:</h4>
-                                <ul class="traits-list">
-                                    <li><i class="fa-solid fa-check"></i> Lana fucsia iridiscente de alta costura e inmune a las modas.</li>
-                                    <li><i class="fa-solid fa-check"></i> Capacidad de pastar con elegancia suprema ante cualquier cámara.</li>
-                                    <li><i class="fa-solid fa-check"></i> Mascota oficial e ícono estético de Green Valley.</li>
-                                </ul>
-                            </div>
-
-                            <div class="skills-container">
-                                <div class="skill-item">
-                                    <div class="skill-label">
-                                        <span>Glamour Mítico</span>
-                                        <span>100%</span>
-                                    </div>
-                                    <div class="skill-bar-track">
-                                        <div class="skill-bar-progress" style="--val: 100%;"></div>
-                                    </div>
-                                </div>
-                                <div class="skill-item">
-                                    <div class="skill-label">
-                                        <span>Rareza de Spawn</span>
-                                        <span>100%</span>
-                                    </div>
-                                    <div class="skill-bar-track">
-                                        <div class="skill-bar-progress" style="--val: 100%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <a href="https://wa.me/5493764658115?text=Hola!%20Quiero%20conocer%20a%20Exequiel%20Palac,%20la%20legendaria%20oveja%20rosa%20%F0%9F%90%91%E2%9C%A8" 
-                               target="_blank" 
-                               rel="noopener noreferrer" 
-                               class="btn btn-wa-action">
-                                <i class="fa-brands fa-whatsapp"></i>
-                                <span>WhatsApp con Exequiel</span>
-                            </a>
-                            <button class="btn btn-inspect" data-target="exequiel">
-                                <i class="fa-solid fa-circle-info"></i> Ficha Secreta
-                            </button>
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 3: HISTORIA / LORE DEL SANTUARIO -->
-        <section class="lore-section" id="lore">
-            <div class="container">
-                <div class="lore-card-wrapper">
-                    <div class="lore-text-side">
-                        <div class="badge lore-badge">
-                            <i class="fa-solid fa-book-open"></i> El Origen de la Manada
-                        </div>
-                        <h2 class="lore-title">¿Cómo nació esta tripulación tan peculiar?</h2>
-                        <p class="lore-paragraph">
-                            En algún lugar entre los campos verdes y los servidores místicos de la imaginación, cuatro almas dispares cruzaron sus caminos. Marita aportó la sabiduría milenaria de la noche; Megan trajo el amor protector y la devoción por el pan; Huevancas rompió todas las leyes de la física con sus piruetas; y Exequiel Palac tiñó el paisaje de color rosa brillante.
-                        </p>
-                        <p class="lore-paragraph">
-                            Juntos forman un ecosistema perfecto de alegría, caos controlado y cariño infinito para todos los que visitan Green Valley.
-                        </p>
-                        <div class="lore-highlights">
-                            <div class="highlight-box">
-                                <i class="fa-solid fa-heart-circle-check"></i>
-                                <span>100% Cuidado & Respeto</span>
-                            </div>
-                            <div class="highlight-box">
-                                <i class="fa-solid fa-shield-cat"></i>
-                                <span>Refugio Libre & Seguro</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 4: SOCIAL HUB (WhatsApp, Instagram, YouTube) -->
-        <section class="social-section" id="redes">
-            <div class="container">
-                
-                <div class="section-header text-center">
-                    <div class="badge section-badge">
-                        <i class="fa-solid fa-globe"></i> Conexión Total
-                    </div>
-                    <h2 class="section-title">¡Conéctate con Nosotros!</h2>
-                    <p class="section-subtitle">
-                        Sigue nuestras aventuras diarias, transmisiones en vivo, reels cómicos y mantén el contacto por nuestros canales oficiales.
-                    </p>
-                </div>
-
-                <!-- Grilla de Redes Sociales -->
-                <div class="social-channels-grid">
-                    
-                    <!-- Tarjeta WhatsApp General -->
-                    <a href="https://wa.me/5493764658115?text=Hola!%20Quiero%20hacer%20una%20consulta%20general%20o%20reservar%20una%20visita%20a%20la%20Tripulaci%C3%B3n%20Ecl%C3%A9ctica%20%F0%9F%90%BE" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="social-hub-card card-channel-wa">
-                        <div class="channel-icon-wrapper">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </div>
-                        <div class="channel-info">
-                            <h3 class="channel-name">WhatsApp General</h3>
-                            <p class="channel-desc">Consultas directas, reservas de visitas guiadas y atención al instante.</p>
-                            <span class="channel-action-tag">
-                                <i class="fa-solid fa-comments"></i> Chatear: +54 9 11 2345-6789
-                            </span>
-                        </div>
-                    </a>
-
-                    <!-- Tarjeta Instagram Oficial -->
-                    <a href="https://instagram.com/GreenValleyFabulosa" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="social-hub-card card-channel-ig">
-                        <div class="channel-icon-wrapper">
-                            <i class="fa-brands fa-instagram"></i>
-                        </div>
-                        <div class="channel-info">
-                            <h3 class="channel-name">Instagram Oficial</h3>
-                            <p class="channel-desc">Fotos inéditas, reels virales de Megan y el book fotográfico de Exequiel.</p>
-                            <span class="channel-action-tag">
-                                <i class="fa-solid fa-camera"></i> Seguir @GreenValleyFabulosa
-                            </span>
-                        </div>
-                    </a>
-
-                    <!-- Tarjeta YouTube Channel -->
-                    <a href="https://youtube.com/@GreenValleyHaven" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="social-hub-card card-channel-yt">
-                        <div class="channel-icon-wrapper">
-                            <i class="fa-brands fa-youtube"></i>
-                        </div>
-                        <div class="channel-info">
-                            <h3 class="channel-name">YouTube Channel</h3>
-                            <p class="channel-desc">Documentales, transmisiones en directo, rescates y acrobacias de Huevancas.</p>
-                            <span class="channel-action-tag">
-                                <i class="fa-solid fa-play"></i> Suscribirse al Canal
-                            </span>
-                        </div>
-                    </a>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN 5: FORMULARIO / CONTACTO RÁPIDO -->
-        <section class="contact-section" id="contacto">
-            <div class="container">
-                <div class="contact-card-box">
-                    <div class="section-header text-center">
-                        <div class="badge section-badge">
-                            <i class="fa-solid fa-envelope-open-text"></i> Mensaje Directo
-                        </div>
-                        <h2 class="section-title">¿Quieres enviarles un saludo?</h2>
-                        <p class="section-subtitle">
-                            Escribe tu mensaje y automáticamente se preparará para enviarse a nuestro canal de WhatsApp.
-                        </p>
-                    </div>
-
-                    <form class="interactive-contact-form" id="quickContactForm">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="userName"><i class="fa-solid fa-user"></i> Tu Nombre:</label>
-                                <input type="text" id="userName" name="name" placeholder="Ej. Juan Pérez" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="favoriteAnimal"><i class="fa-solid fa-heart"></i> Tu animal favorito:</label>
-                                <select id="favoriteAnimal" name="animal" required>
-                                    <option value="Toda la manada">¡A todos por igual!</option>
-                                    <option value="Marita">Marita (La gata detective)</option>
-                                    <option value="Megan">Megan (La guardiana del pan)</option>
-                                    <option value="Huevancas">Huevancas (El acróbata)</option>
-                                    <option value="Exequiel Palac">Exequiel Palac (La oveja rosa)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="userMessage"><i class="fa-solid fa-comment-dots"></i> Mensaje para la tripulación:</label>
-                            <textarea id="userMessage" name="message" rows="4" placeholder="Escribe tu mensaje, anécdota o consulta aquí..." required></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-submit-wa">
-                            <i class="fa-brands fa-whatsapp"></i> Enviar Mensaje por WhatsApp
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- PIE DE PÁGINA / FOOTER -->
-    <footer class="main-footer">
-        <div class="container footer-container">
-            <div class="footer-brand-col">
-                <div class="footer-logo">
-                    <span class="logo-emoji">🐾</span>
-                    <span class="logo-name">Tripulación Ecléctica</span>
-                </div>
-                <p class="footer-tagline">
-                    Un santuario virtual dedicado al amor, la lealtad y el carisma de nuestros cuatro guardianes.
-                </p>
-            </div>
-
-            <div class="footer-links-col">
-                <h4 class="footer-heading">Navegación</h4>
-                <ul class="footer-nav">
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#tripulacion">La Tripulación</a></li>
-                    <li><a href="#lore">Nuestra Historia</a></li>
-                    <li><a href="#redes">Redes Sociales</a></li>
-                    <li><a href="#contacto">Contacto</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-animals-col">
-                <h4 class="footer-heading">Acceso Directo</h4>
-                <ul class="footer-nav">
-                    <li><a href="#marita">🐱 Marita</a></li>
-                    <li><a href="#megan">🐕 Megan</a></li>
-                    <li><a href="#huevancas">⚡ Huevancas</a></li>
-                    <li><a href="#exequiel">🐑 Exequiel Palac</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom-bar">
-            <div class="container footer-bottom-content">
-                <p class="copy-text">© 2026 Tripulación Ecléctica. Todos los derechos reservados.</p>
-                <div class="footer-social-minis">
-                    <a href="https://wa.me/5493764658115" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                    <a href="https://instagram.com/GreenValleyFabulosa" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://youtube.com/@GreenValleyHaven" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- MODAL EMERGENTE DE DETALLES TÉCNICOS (Para 'Ver Ficha Secreta') -->
-    <div class="modal-backdrop" id="animalModal" aria-hidden="true" role="dialog">
-        <div class="modal-dialog">
-            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Cerrar modal">
-                <i class="fa-solid fa-xmark"></i>
+            <button class="level-tab" data-level="1">
+                <span class="tab-badge">Nvl 2</span>
+                <span class="tab-emoji">🐕</span>
+                <span class="tab-name">Megan</span>
             </button>
-            <div class="modal-dynamic-body" id="modalBody">
-                <!-- Se inyecta dinámicamente con JavaScript -->
+            <button class="level-tab" data-level="2">
+                <span class="tab-badge">Nvl 3</span>
+                <span class="tab-emoji">⚡</span>
+                <span class="tab-name">Huevancas</span>
+            </button>
+            <button class="level-tab" data-level="3">
+                <span class="tab-badge">Nvl 4</span>
+                <span class="tab-emoji">🐑</span>
+                <span class="tab-name">Exequiel</span>
+            </button>
+        </nav>
+
+        <!-- Panel de Estado del Juego (HUD) -->
+        <section class="game-hud">
+            <div class="hud-card">
+                <span class="hud-label"><i class="fa-solid fa-stopwatch"></i> Tiempo</span>
+                <span class="hud-value" id="timerDisplay">00:00</span>
+            </div>
+            <div class="hud-card">
+                <span class="hud-label"><i class="fa-solid fa-shoe-prints"></i> Movimientos</span>
+                <span class="hud-value" id="movesDisplay">0</span>
+            </div>
+            <div class="hud-card difficulty-card">
+                <span class="hud-label"><i class="fa-solid fa-sliders"></i> Modo</span>
+                <div class="grid-picker">
+                    <button class="grid-btn active" data-grid="3">3x3</button>
+                    <button class="grid-btn" data-grid="4">4x4</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tablero Principal del Rompecabezas -->
+        <main class="puzzle-area">
+            <div class="board-frame" id="boardFrame">
+                <div class="puzzle-board" id="puzzleBoard">
+                    <!-- Las fichas se inyectan dinámicamente con JavaScript -->
+                </div>
+
+                <!-- Overlay de Pista / Ver Imagen Original -->
+                <div class="preview-overlay" id="previewOverlay">
+                    <img src="img/marita.jpeg" alt="Pista de imagen original" id="previewImg">
+                    <span class="preview-tag"><i class="fa-solid fa-eye"></i> Imagen Guía</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Barra de Botones de Acción -->
+        <footer class="game-actions">
+            <button class="btn btn-action btn-shuffle" id="shuffleBtn">
+                <i class="fa-solid fa-shuffle"></i>
+                <span>Mezclar</span>
+            </button>
+            <button class="btn btn-action btn-peek" id="peekBtn">
+                <i class="fa-solid fa-eye"></i>
+                <span>Ver Original</span>
+            </button>
+            <button class="btn btn-action btn-reset" id="resetBtn">
+                <i class="fa-solid fa-rotate-left"></i>
+                <span>Reiniciar</span>
+            </button>
+        </footer>
+
+    </div>
+
+    <!-- MODAL DE VICTORIA -->
+    <div class="modal-backdrop" id="winModal" role="dialog" aria-hidden="true">
+        <div class="modal-card win-card">
+            <div class="win-sparkle">✨</div>
+            <h2 class="win-title">¡NIVEL COMPLETADO!</h2>
+            <p class="win-subtitle" id="winMessage">¡Has armado la foto de Marita con éxito!</p>
+
+            <div class="win-preview-box">
+                <img src="img/marita.jpg" id="winLevelImg" alt="Imagen completada">
+            </div>
+
+            <div class="win-stats-grid">
+                <div class="win-stat">
+                    <span class="stat-icon"><i class="fa-solid fa-stopwatch"></i></span>
+                    <span class="stat-title">Tiempo</span>
+                    <strong id="winTime">00:45</strong>
+                </div>
+                <div class="win-stat">
+                    <span class="stat-icon"><i class="fa-solid fa-shoe-prints"></i></span>
+                    <span class="stat-title">Movimientos</span>
+                    <strong id="winMoves">32</strong>
+                </div>
+            </div>
+
+            <div class="win-actions">
+                <button class="btn btn-win-next" id="nextLevelBtn">
+                    <span>Siguiente Nivel</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button class="btn btn-win-replay" id="replayBtn">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Jugar Otra Vez</span>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- BOTÓN FLOTANTE DE RETORNO ARRIBA -->
-    <a href="#top" class="floating-scroll-top" id="scrollTopBtn" aria-label="Volver arriba">
-        <i class="fa-solid fa-arrow-up"></i>
-    </a>
+    <!-- MODAL DE CÓMO JUGAR -->
+    <div class="modal-backdrop" id="helpModal" role="dialog" aria-hidden="true">
+        <div class="modal-card help-card">
+            <button class="modal-close" id="closeHelpBtn"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="help-title"><i class="fa-solid fa-gamepad"></i> ¿Cómo Jugar?</h2>
+            
+            <ul class="help-list">
+                <li>
+                    <span class="help-step">1</span>
+                    <p>Haz clic o toca cualquier pieza que esté <strong>al lado del espacio vacío</strong> para deslizarla.</p>
+                </li>
+                <li>
+                    <span class="help-step">2</span>
+                    <p>Usa el botón <strong>"Ver Original"</strong> si necesitas recordar cómo debe quedar la imagen.</p>
+                </li>
+                <li>
+                    <span class="help-step">3</span>
+                    <p>Arma los 4 niveles para descubrir las postales completas de <strong>Marita, Megan, Huevancas y Exequiel</strong>.</p>
+                </li>
+            </ul>
 
-    <!-- BOTÓN FLOTANTE FIJO DE WHATSAPP -->
-    <a href="https://wa.me/5493764658115?text=Hola!%20Me%20encant%C3%B3%20la%20Tripulaci%C3%B3n%20Ecl%C3%A9ctica%20%F0%9F%A5%B0" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       class="floating-wa-btn" 
-       aria-label="Contactar por WhatsApp">
-        <i class="fa-brands fa-whatsapp"></i>
-        <span class="floating-wa-tooltip">¿Charlamos? 🐾</span>
-    </a>
+            <button class="btn btn-primary" id="startPlayingBtn">¡Entendido, a jugar!</button>
+        </div>
+    </div>
 
 </body>
 </html>
